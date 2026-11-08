@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOOPLY | Share Your Vibe</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090910;color:white;font-family:Arial,sans-serif}
+header{height:65px;background:#11111b;display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:sticky;top:0;z-index:10;border-bottom:1px solid #292938}
+.logo{font-size:27px;font-weight:900;color:#ff3985;letter-spacing:1px}
+header button{background:none;border:0;color:white;font-size:24px;cursor:pointer}
+.tabs{display:flex;justify-content:center;gap:30px;padding:17px;border-bottom:1px solid #292938}
+.tabs span{color:#888;cursor:pointer}
+.tabs .active{color:#ff3985;font-weight:bold;border-bottom:2px solid #ff3985;padding-bottom:8px}
+.feed{max-width:480px;margin:auto;padding:14px}
+.post{height:510px;border-radius:20px;position:relative;overflow:hidden;margin-bottom:20px;background:linear-gradient(140deg,#32105c,#e33d82,#ff9955)}
+.post:nth-child(2){background:linear-gradient(140deg,#063a50,#087d91,#42d6b0)}
+.post:nth-child(3){background:linear-gradient(140deg,#35114b,#8b247c,#e65b91)}
+.art{font-size:90px;position:absolute;top:35%;width:100%;text-align:center}
+.post video{width:100%;height:100%;object-fit:cover}
+.caption{position:absolute;bottom:15px;left:15px;right:75px;text-shadow:0 2px 5px black}
+.caption h3{margin:0 0 7px}
+.caption p{font-size:14px}
+.actions{position:absolute;right:13px;bottom:25px;display:flex;flex-direction:column;gap:20px}
+.actions button{background:#1119;color:white;border:0;font-size:25px;cursor:pointer}
+.actions small{display:block;font-size:11px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#11111b;border-top:1px solid #292938;display:flex;justify-content:space-around;padding:12px;z-index:10}
+.nav button{background:none;border:0;color:white;font-size:13px;cursor:pointer}
+.nav b{display:block;font-size:22px;margin-bottom:4px}
+footer{text-align:center;color:#888;padding:15px 0 85px}
+#profileBox{display:none;max-width:440px;margin:30px auto;text-align:center;padding:20px}
+.avatar{font-size:65px}
+.upload{background:#ff3985;color:white;border:0;border-radius:12px;padding:12px 20px;font-weight:bold}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">LOOPLY</div>
+ <button onclick="searchUser()">⌕</button>
+ <button onclick="profile()">♙</button>
+</header>
+
+<div class="tabs">
+ <span>Following</span>
+ <span class="active">For You</span>
+ <span>Trending</span>
+</div>
+
+<input type="file" id="videoInput" accept="video/*" hidden>
+
+<main class="feed" id="feed">
+
+<section class="post">
+ <div class="art">🌈✨</div>
+ <div class="caption">
+  <h3>@sana_official</h3>
+  <p>Welcome to LOOPLY! Share your vibe 💖</p>
+  <p>♪ Original sound</p>
+ </div>
+ <div class="actions">
+  <button onclick="like(this)">🤍<small>0</small></button>
+  <button onclick="comment()">💬<small>Comment</small></button>
+  <button onclick="share()">↗<small>Share</small></button>
+ </div>
+</section>
+
+<section class="post">
+ <div class="art">🌊🏝️</div>
+ <div class="caption">
+  <h3>@cool_creator</h3>
+  <p>Enjoy the beautiful vibes! 🌊</p>
+ </div>
+ <div class="actions">
+  <button onclick="like(this)">🤍<small>0</small></button>
+  <button onclick="comment()">💬<small>Comment</small></button>
+  <button onclick="share()">↗<small>Share</small></button>
+ </div>
+</section>
+
+<section class="post">
+ <div class="art">🎧🎵</div>
+ <div class="caption">
+  <h3>@music_world</h3>
+  <p>Music makes everything better 🎶</p>
+ </div>
+ <div class="actions">
+  <button onclick="like(this)">🤍<small>0</small></button>
+  <button onclick="comment()">💬<small>Comment</small></button>
+  <button onclick="share()">↗<small>Share</small></button>
+ </div>
+</section>
+
+</main>
+
+<section id="profileBox">
+ <div class="avatar">👩🏻</div>
+ <h2>Sana</h2>
+ <p>@sana_official</p>
+ <p>Welcome to my LOOPLY profile 💖</p>
+ <button class="upload" onclick="document.getElementById('videoInput').click()">＋ Upload Video</button>
+ <button class="upload" onclick="home()">Home</button>
+</section>
+
+<footer>LOOPLY © 2026 · Created by Sana</footer>
+
+<nav class="nav">
+ <button onclick="home()"><b>⌂</b>Home</button>
+ <button onclick="document.getElementById('videoInput').click()"><b>＋</b>Create</button>
+ <button onclick="alert('Inbox coming soon!')"><b>♡</b>Inbox</button>
+ <button onclick="profile()"><b>♙</b>Profile</button>
+</nav>
+
+<script>
+function like(btn){
+ let count=btn.querySelector("small");
+ let liked=btn.dataset.liked==="yes";
+ btn.dataset.liked=liked?"no":"yes";
+ btn.firstChild.textContent=liked?"🤍":"❤️";
+ count.textContent=Number(count.textContent)+(liked?-1:1);
+}
+
+function comment(){
+ let text=prompt("Write your comment:");
+ if(text) alert("Comment preview: "+text);
+}
+
+function share(){
+ if(navigator.share){
+  navigator.share({title:"LOOPLY",text:"Check out LOOPLY!"});
+ }else{
+  alert("Share LOOPLY with your friends!");
+ }
+}
+
+function home(){
+ document.getElementById("feed").style.display="block";
+ document.getElementById("profileBox").style.display="none";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function profile(){
+ document.getElementById("feed").style.display="none";
+ document.getElementById("profileBox").style.display="block";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function searchUser(){
+ let name=prompt("Search LOOPLY:");
+ if(name) alert("Search for "+name+" coming soon!");
+}
+
+document.getElementById("videoInput").addEventListener("change",function(e){
+ const file=e.target.files[0];
+ if(!file)return;
+ if(!file.type.startsWith("video/")){
+  alert("Select a valid video!");
+  return;
+ }
+ const url=URL.createObjectURL(file);
+ const post=document.createElement("section");
+ post.className="post";
+ const video=document.createElement("video");
+ video.src=url;
+ video.controls=true;
+ video.autoplay=true;
+ video.loop=true;
+ video.muted=true;
+ const caption=document.createElement("div");
+ caption.className="caption";
+ caption.innerHTML="<h3>@sana_official</h3><p>My new LOOPLY video 🎬</p>";
+ post.append(video,caption);
+ document.getElementById("feed").prepend(post);
+ home();
+ e.target.value="";
+});
+</script>
+
+</body>
+</html>
